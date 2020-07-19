@@ -219,7 +219,7 @@ export default class Game extends Phaser.Scene {
   newCorpse(character, lootRights) {
 	const corpse = Corpse.fromCharacterWithLootRights(this,character,lootRights);
 	this.corpses[corpse.id] = corpse;
-  	io.emit('newCorpse', {x:corpse.x,y:corpse.y,name:corpse.name,id:corpse.id,spriteKey:corpse.spriteKey});
+  	io.emit('newCorpse', {x:corpse.x,y:corpse.y,name:corpse.name,id:corpse.id,spriteKey:corpse.spriteKey,items:corpse.items});
   }
 
   removeCorpse(id) {

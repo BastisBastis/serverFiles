@@ -12,6 +12,7 @@ export default class Corpse {
         this.decayTime = decayTime || Object.keys(items).length > 0 ? 300 : 5;
         this.decayCountdown = this.decayTime;
         this.id = name+(idCounter++);
+        this.playerLooting=false;
     }
 
     update(delta) {
@@ -41,6 +42,12 @@ export default class Corpse {
 
     static fromPlayer(player) {
         return Corpse.fromCharacterWithLootRights(scene,player, [player.id]);
+    }
+
+    playerCanLoot(playerId) {
+        if (this.lootRights.includes(playerId))
+            return true;
+        return false;
     }
 
 

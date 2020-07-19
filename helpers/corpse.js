@@ -23,10 +23,10 @@ export default class Corpse {
 
     static fromCharacterWithLootRights(scene, character, lootRights) {
         const items = [];
-        for (const [_,item] in Object.entries(character.equipmentSlots))
+        for (const [_,item] of Object.entries(character.equipmentSlots))
             if (item)
                 items.push(item);
-        for (const [_,item] in Object.entries(character.inventorySlots))
+        for (const [_,item] of Object.entries(character.inventorySlots))
             if (item)
                 items.push(item);        
         return new Corpse({

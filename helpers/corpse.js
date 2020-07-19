@@ -37,7 +37,7 @@ export default class Corpse {
             y:character.y,
             items: items,
             lootRights:lootRights
-        });
+        }); 
     }
 
     static fromPlayer(player) {

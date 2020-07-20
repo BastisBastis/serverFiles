@@ -1,7 +1,6 @@
 import Phaser from "phaser";
 import Game from "./scenes/game";
 
-console.log('hmm');
 
 const config = {
   type: Phaser.HEADLESS,

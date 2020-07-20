@@ -20,7 +20,7 @@ export default class NPC extends Character {
      }
      if (this.target) {
        this.approachTarget();
-       
+        
        
      }
      

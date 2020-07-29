@@ -132,17 +132,18 @@ export default class Game extends Phaser.Scene {
 				}
 			});
 			socket.on('requestToLootItemAtSlot', function (data) {
+				//Debuggin:
+				console.log(self.corpses, data.corpseId);
+
 				//Check if player is looting corpse
 				
 				//Check if player has room in inventory
 				let firstOpenSlot = false;
 				for (const [slot, item] of Object.entries(self.players[data.playerId].inventorySlots)) {
-					console.log(slot, item);
 					if (!firstOpenSlot && !item)
 						firstOpenSlot = slot;
 				}
 				if (firstOpenSlot) {
-					console.log("First open slot: "+firstOpenSlot);
 					const itemIndex = Number(data.slot.substring(6));
 					const item = self.corpses[data.corpseId].items[itemIndex];
 					self.corpses[data.corpseId].items.splice(itemIndex,1);

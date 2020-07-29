@@ -133,7 +133,7 @@ export default class Game extends Phaser.Scene {
 			});
 			socket.on('requestToLootItemAtSlot', function (data) {
 				//Debuggin:
-				console.log("corpse: "+self.corpses[data.corpseId]);
+				console.log("corpse:",self.corpses[data.corpseId].items);
 
 				//Check if player is looting corpse
 				
@@ -150,7 +150,6 @@ export default class Game extends Phaser.Scene {
 					self.players[data.playerId].setItemAtSlot(item, firstOpenSlot);
 					socket.emit('updateCorpseItems', {corpseId:data.corpseId, items:self.corpses[data.corpseId].items});
 				}
-				console.log(data);
         	});
           	
           	//When a user disconnects, destroy and remove the player and pass the information along to the clients.

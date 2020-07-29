@@ -8,7 +8,7 @@ export default class Corpse {
         this.y = y;
         this.lootRights = lootRights;
         this.spriteKey = spriteKey;
-      	console.log(items);
+      	this.items = items;
         this.decayTime = decayTime || Object.keys(items).length > 0 ? 300 : 5;
         this.decayCountdown = this.decayTime;
         this.id = name+(idCounter++);

@@ -132,6 +132,10 @@ export default class Game extends Phaser.Scene {
 					socket.emit('lootCorpse', {id:corpseId, items:self.corpses[corpseId].items})
 				}
 			});
+			socket.on('requestToLootItemAtSlot', function (data) {
+			
+			console.log(data);
+        });
           	
           	//When a user disconnects, destroy and remove the player and pass the information along to the clients.
           	socket.on('disconnect', function () {

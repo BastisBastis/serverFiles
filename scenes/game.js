@@ -142,9 +142,9 @@ export default class Game extends Phaser.Scene {
 						firstOpenSlot = slot;
 				}
 				if (firstOpenSlot) {
-					const itemIndex = Number(data.slot.substring(6));
+					const itemIndex = Number(data.slot.substring(6))-1;
 					//console.log("itemIndex",itemIndex);
-					const item = self.corpses[data.corpseId].items[itemIndex-1];
+					const item = self.corpses[data.corpseId].items[itemIndex];
 					self.corpses[data.corpseId].items.splice(itemIndex,1);
 					self.players[data.playerId].setItemAtSlot(item, firstOpenSlot);
 					socket.emit('updateCorpseItems', {corpseId:data.corpseId, items:self.corpses[data.corpseId].items});

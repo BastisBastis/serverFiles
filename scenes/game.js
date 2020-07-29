@@ -133,7 +133,7 @@ export default class Game extends Phaser.Scene {
 			});
 			socket.on('requestToLootItemAtSlot', function (data) {
 				//Debuggin:
-				console.log(self.corpses, data.corpseId);
+				console.log("corpse: "+self.corpses[data.corpseId]);
 
 				//Check if player is looting corpse
 				

@@ -126,17 +126,28 @@ export default class Game extends Phaser.Scene {
 			});
 			
 			socket.on('requestCorpseLooting',function (corpseId) {
-				console.log('game.js: requestCorpseLooting '+corpseId);
 				if (self.corpses[corpseId]) {
-
 					//Check for distance, no other looters and loot rights
 					socket.emit('lootCorpse', {id:corpseId, items:self.corpses[corpseId].items})
 				}
 			});
 			socket.on('requestToLootItemAtSlot', function (data) {
-			
-			console.log(data);
-        });
+				//Check if player is looting corpse
+				
+				//Check if player has room in inventory
+				let firstOpenSlot = false;
+				for (const [slot, item] of Object.entries(self.players[data.playerId].inventorySlots)) 
+					if (!firstOpenSlot && item)
+						firstOpenSlot = slot;
+				if (firstOpenSlot) {
+					const itemIndex = Number(data.slot.substring(6));
+					const item = self.corpses[data.corpseId].items[itemIndex];
+					self.corpses[data.corpseId].items.splice(itemIndex,1);
+					self.players[data.playerId].setItemAtSlot(item, firstOpenSlot);
+					socket.emit('updateCorpseItems', {corpseId:data.corpseId, items:self.corpses[data.corpseId].items});
+				}
+				console.log(data);
+        	});
           	
           	//When a user disconnects, destroy and remove the player and pass the information along to the clients.
           	socket.on('disconnect', function () {

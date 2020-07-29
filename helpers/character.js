@@ -119,6 +119,17 @@ export default class Character {
       }
         
     }
+
+    setItemAtSlot(item, slot) {
+      let container = this.equipmentSlots;
+      if (slot.startsWith('inv'))
+        container = this.inventorySlots;
+
+      container[slot] = item;
+      if (!this.updatedValues.items)
+        this.updatedValues.items = {};
+      this.updatedValues.items[slot] = container[slot];
+    }
   
     die () {
       this.alive = false;

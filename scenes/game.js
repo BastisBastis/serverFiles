@@ -128,7 +128,7 @@ export default class Game extends Phaser.Scene {
 			socket.on('requestCorpseLooting',function (corpseId) {
 				if (self.corpses[corpseId]) {
 					//Check for distance, no other looters and loot rights
-					socket.emit('lootCorpse', {id:corpseId, items:self.corpses[corpseId].items})
+					socket.emit('lootCorpse', {corpseId:corpseId, items:self.corpses[corpseId].items})
 				}
 			});
 			socket.on('requestToLootItemAtSlot', function (data) {

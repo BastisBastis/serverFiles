@@ -132,8 +132,6 @@ export default class Game extends Phaser.Scene {
 				}
 			});
 			socket.on('requestToLootItemAtSlot', function (data) {
-				//Debuggin:
-				console.log("corpse:",self.corpses[data.corpseId].items);
 
 				//Check if player is looting corpse
 				
@@ -145,6 +143,7 @@ export default class Game extends Phaser.Scene {
 				}
 				if (firstOpenSlot) {
 					const itemIndex = Number(data.slot.substring(6));
+					console.log("itemIndex",itemIndex);
 					const item = self.corpses[data.corpseId].items[itemIndex];
 					self.corpses[data.corpseId].items.splice(itemIndex,1);
 					self.players[data.playerId].setItemAtSlot(item, firstOpenSlot);

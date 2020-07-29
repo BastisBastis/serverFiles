@@ -138,7 +138,7 @@ export default class Game extends Phaser.Scene {
 				let firstOpenSlot = false;
 				for (const [slot, item] of Object.entries(self.players[data.playerId].inventorySlots)) {
 					console.log(slot, item);
-					if (!firstOpenSlot && item)
+					if (!firstOpenSlot && !item)
 						firstOpenSlot = slot;
 				}
 				if (firstOpenSlot) {

@@ -131,12 +131,12 @@ export default class Character {
       this.updatedValues.items[slot] = container[slot];
     }
   
-    die () {
+    die (attacker) {
       this.alive = false;
       this.updatedValues.alive=false;
       this.body.body.velocity.x=0;
       this.body.body.velocity.y=0;
-      this.scene.newCorpse(this, this.id);
+      this.scene.newCorpse(this, [this.id, attacker.id]);
     }
     
     getTargetId () {
@@ -237,7 +237,7 @@ export default class Character {
           //this.scene.emitToPlayer(player.id, 'You must face your target');
           console.log('Not facing target');
           return false;
-        }
+        } 
       
         const result = CombatEngine.attack(this, this.target);
       	//console.log("result: "+result);
@@ -264,7 +264,7 @@ export default class Character {
           return CombatEngine.ATTACK_RESULT_MISSED;
         }
         if (this.hp<=0) {
-          this.die();
+          this.die(attacker);
           return CombatEngine.ATTACK_RESULT_DIED;
         }
         return CombatEngine.ATTACK_RESULT_SURVIVED;

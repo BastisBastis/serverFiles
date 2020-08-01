@@ -127,6 +127,9 @@ export default class Game extends Phaser.Scene {
 			});
 			
 			socket.on('requestCorpseLooting',function (data) {
+				//debugging
+				console.log('loot rights:',self.corpses[data.corpseId].lootRights);
+
 				if (self.corpses[data.corpseId]) {
 					//Check for distance, no other looters and loot rights
 					if (!self.corpses[data.corpseId].lootRights.includes(data.playerId)) {

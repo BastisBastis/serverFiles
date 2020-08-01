@@ -3,6 +3,7 @@ import Player from '../helpers/player';
 import Map from '../helpers/map';
 import Corpse from '../helpers/corpse';
 
+const maxLootingDistance = 40;
 
 export default class Game extends Phaser.Scene {
 	constructor() {
@@ -125,15 +126,35 @@ export default class Game extends Phaser.Scene {
               	self.players[data.playerId].switchItemSlots(data.a, data.b);
 			});
 			
-			socket.on('requestCorpseLooting',function (corpseId) {
+			socket.on('requestCorpseLooting',function (data) {
 				if (self.corpses[corpseId]) {
 					//Check for distance, no other looters and loot rights
-					socket.emit('lootCorpse', {corpseId:corpseId, items:self.corpses[corpseId].items})
+					if (!self.corpes[data.corpseId].lootRights.includes(data.playerId)) {
+						console.log(self.players[data.playerId].name, 'does not have the loot rights for looting ',self.corpses[data.corpseId].name);
+						socket.emit('message', 'You do not have the rights to loot that corpse');
+						return;
+					}
+					
+					if (self.corpses[data.corpseId].playerLooting) {
+						console.log('Corpse is already being looted');
+						socket.emit('message','Corpse is already being looted');
+						return;
+					}
+
+					const distToCorpse = Math.sqrt(Math.pow(Math.abs(self.players[data.playerId].x-self.corpses[data.corpseId].x),2)+Math.pow(Math.abs(self.players[data.playerId].y-self.corpses[data.corpseId].y),2));
+					if (distToCorpse > maxLootingDistance) {
+						console.log('Corpse too far away');
+						socket.emit('message', 'Corpse is too far away');
+						return;
+					}
+
+					socket.emit('lootCorpse', {corpseId:data.corpseId, items:self.corpses[data.corpseId].items})
 				}
 			});
 			socket.on('requestToLootItemAtSlot', function (data) {
 
 				//Check if player is looting corpse
+				
 				
 				//Check if player has room in inventory
 				let firstOpenSlot = false;

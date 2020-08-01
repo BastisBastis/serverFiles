@@ -127,9 +127,9 @@ export default class Game extends Phaser.Scene {
 			});
 			
 			socket.on('requestCorpseLooting',function (data) {
-				if (self.corpses[corpseId]) {
+				if (self.corpses[data.corpseId]) {
 					//Check for distance, no other looters and loot rights
-					if (!self.corpes[data.corpseId].lootRights.includes(data.playerId)) {
+					if (!self.corpses[data.corpseId].lootRights.includes(data.playerId)) {
 						console.log(self.players[data.playerId].name, 'does not have the loot rights for looting ',self.corpses[data.corpseId].name);
 						socket.emit('message', 'You do not have the rights to loot that corpse');
 						return;

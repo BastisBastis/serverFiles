@@ -127,27 +127,23 @@ export default class Game extends Phaser.Scene {
 			});
 			
 			socket.on('requestCorpseLooting',function (data) {
-				//debugging
-				console.log('loot rights:',self.corpses[data.corpseId].lootRights);
 
 				if (self.corpses[data.corpseId]) {
 					//Check for distance, no other looters and loot rights
 					if (!self.corpses[data.corpseId].lootRights.includes(data.playerId)) {
-						console.log(self.players[data.playerId].name, 'does not have the loot rights for looting ',self.corpses[data.corpseId].name);
 						socket.emit('message', 'You do not have the rights to loot that corpse');
 						return;
 					}
 					
 					if (self.corpses[data.corpseId].playerLooting) {
-						console.log('Corpse is already being looted');
+						
 						socket.emit('message','Corpse is already being looted');
 						return;
 					}
 
 					const distToCorpse = Math.sqrt(Math.pow(Math.abs(self.players[data.playerId].x-self.corpses[data.corpseId].x),2)+Math.pow(Math.abs(self.players[data.playerId].y-self.corpses[data.corpseId].y),2));
 					if (distToCorpse > maxLootingDistance) {
-						console.log('Corpse too far away');
-						socket.emit('message', 'Corpse is too far away');
+						
 						return;
 					}
 
@@ -294,7 +290,6 @@ export default class Game extends Phaser.Scene {
 	  }
       //physicsGroup:this.physicsChars
 	});
-	console.log(npc.equipmentSlots);
     this.physicsChars.add(npc.body);
     this.npcs[npc.id]=npc;
   }

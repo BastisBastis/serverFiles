@@ -25,7 +25,7 @@ export default class Character {
     bodyRadius=6,
     attackRange= 30,
     attacking=false,
-    spawnPoint = {x:100, y:100},
+    spawnPoint = {x:160, y:100},
     level=1,
     experience=0,
     hpRegen=4,

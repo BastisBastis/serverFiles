@@ -170,11 +170,11 @@ export default class Character {
     }
   
     toggleAttacking () {
-      if (this.attacking && !this.target) {
+      if (!this.attacking && !this.target) {
       	console.log('Need a target to attack');
         return;
       }
-      if (this.attacking && this.target.id === this.id) {
+      if (!this.attacking && this.target.id === this.id) {
        	console.log('Cannot attack yourself');
         return;
       }
